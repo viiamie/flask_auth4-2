@@ -18,11 +18,13 @@ class login_form(FlaskForm):
 class register_form(FlaskForm):
     email = EmailField('Email Address', [
         validators.DataRequired(),
+        validators.length(min=6, max=35)
 
     ], description="You need to signup with an email")
 
     password = PasswordField('Create Password', [
         validators.DataRequired(),
+        validators.length(min=6, max=35),
         validators.EqualTo('confirm', message='Passwords must match'),
 
     ], description="Create a password ")
@@ -31,12 +33,14 @@ class register_form(FlaskForm):
 
 class security_form(FlaskForm):
     email = EmailField('Email Address', [
-        validators.DataRequired(), validators.length(min=10, max=300)
+        validators.DataRequired(),
+        validators.length(min=10, max=35)
 
     ], description="You can change your email address")
 
     password = PasswordField('Create Password', [
-        validators.DataRequired(), validators.length(min=10, max=300),
+        validators.DataRequired(),
+        validators.length(min=10, max=35),
         validators.EqualTo('confirm', message='Passwords must match'),
 
     ], description="Create a password ")

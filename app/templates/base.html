@@ -8,7 +8,8 @@
 
         {% block styles %}
             <!-- Bootstrap CSS -->
-            <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+            {{ bootstrap.load_css() }}
+
         {% endblock %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -43,7 +44,6 @@
                         {% endif %}
 
                         {{ render_nav_item('simple_pages.about','About') }}
-                        {{ render_nav_item('simple_pages.welcome','Welcome') }}
                     </div>
                 </div>
                 <div class="navbar-nav d-flex">

@@ -39,7 +39,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: viiamie/flask_auth4
+          images: ljl9/flask_auth4-2
 
       - name: Build and push
         uses: docker/build-push-action@v2
