@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block content %}
+    {% from 'bootstrap5/form.html' import render_form, render_field, render_form_row %}
+
+    <div class="row">
+        <div class="col-7">
+            <h2>Register</h2>
+            {{ render_form(form) }}
+        </div>
+        <div id="message" class="col-5">
+        <div class="progress">
+            <div id="pbar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        password must contain the following:
+            <div id="letter" class="invalid">
+               a lower case letter
+            </div>
+            <div id="capital" class="invalid">
+               a capital letter
+            </div>
+            <div id="number" class="invalid">
+               a number
+            </div>
+            <div id="character" class="invalid">
+               a special character (@$!%*#?&)
+            </div>
+            <div id="length" class="invalid">
+               6 or more characters
+            </div>
+        </div>
+        </div>
+    </div>
+
+ <style>
+    .invalid {
+        color: red;
+    }
+
+     .valid {
+        color: green;
+    }
+</style>
+
+<script>
+
+    let pswdField = document.getElementById("password");
+    let message = document.getElementById("message");
+    let letter = document.getElementById("letter");
+    let capital = document.getElementById("capital");
+    let number = document.getElementById("number");
+    let character = document.getElementById("character");
+    let length = document.getElementById("length");
+
+    let lowerCaseLetters = /[a-z]/g;
+    let upperCaseLetters = /[A-Z]/g;
+    let numbers = /[0-9]/g;
+    let characters = /[@$!%*#?&]/g;
+
+    let lowercase = 0;
+    let uppercase = 0;
+    let nums = 0;
+    let chars = 0;
+    let len = 0;
+
+    pswdField.onfocus = function() {
+        message.style.display = "block";
+    }
+    pswdField.onblur = function() {
+        message.style.display = "none";
+    }
+
+    pswdField.onkeyup = function() {
+        let progressBar = document.getElementById("pbar");
+
+        if (pswdField.value.match(lowerCaseLetters)) {
+            letter.classList.remove("invalid");
+            letter.classList.add("valid");
+            lowercase = 1;
+        } else {
+            letter.classList.remove("valid");
+            letter.classList.add("invalid");
+            lowercase = 0;
+        }
+
+        if(pswdField.value.match(upperCaseLetters)) {
+            capital.classList.remove("invalid");
+            capital.classList.add("valid");
+            uppercase = 1;
+        } else {
+            capital.classList.remove("valid");
+            capital.classList.add("invalid");
+            uppercase = 0;
+        }
+
+        if(pswdField.value.match(numbers)) {
+            number.classList.remove("invalid");
+            number.classList.add("valid");
+            nums = 1;
+        } else {
+            number.classList.remove("valid");
+            number.classList.add("invalid");
+            nums = 0;
+        }
+
+        if(pswdField.value.match(characters)) {
+            character.classList.remove("invalid");
+            character.classList.add("valid");
+            chars = 1;
+        } else {
+            character.classList.remove("valid");
+            character.classList.add("invalid");
+            chars = 0;
+        }
+
+        if(pswdField.value.length >= 6) {
+            length.classList.remove("invalid");
+            length.classList.add("valid");
+            len = 1;
+        } else {
+            length.classList.remove("valid");
+            length.classList.add("invalid");
+            len = 0;
+        }
+
+        let count = (lowercase + uppercase + nums + chars + len);
+        if (count === 0) {
+            progressBar.style.width = "0%";
+        } else if (count === 5) {
+            progressBar.style.width = "100%"
+        } else {
+            let new_pbar_width = (count * 20) + 1;
+            progressBar.style.width =  (new_pbar_width.toString()).concat("%");
+        }
+    }
+
+</script>
+
+{% endblock %}
